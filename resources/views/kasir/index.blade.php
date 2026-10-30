@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -10,6 +11,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{ asset('css/chasier.css') }}">
+
+    {{-- Laravel Echo dan Reverb --}}
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>
@@ -527,13 +531,54 @@
 </div>
 
 
+<!-- DATA PRODUK -->
+
 <script>
-
     const products = @json($products);
-
 </script>
 
+
+<!-- JAVASCRIPT KASIR -->
+
 <script src="{{ asset('js/chasier.js') }}"></script>
+
+
+<!-- LISTENER REAL-TIME LARAVEL ECHO -->
+
+<script>
+    window.addEventListener('load', function () {
+
+        console.log('HALAMAN KASIR BERHASIL DIMUAT');
+
+        if (typeof window.Echo !== 'undefined') {
+
+            console.log('LARAVEL ECHO AKTIF');
+
+            window.Echo.channel('orders')
+                .listen('.order.placed', function (e) {
+
+                    console.log('EVENT DITERIMA:', e);
+
+                    alert(
+                        'TRANSAKSI BARU!\n\n' +
+                        'Nomor Transaksi: ' +
+                        e.order.transaction_number +
+                        '\nTotal: Rp ' +
+                        Number(e.order.total).toLocaleString('id-ID') +
+                        '\nMetode Pembayaran: ' +
+                        e.order.payment_method
+                    );
+
+                });
+
+        } else {
+
+            console.error('LARAVEL ECHO TIDAK AKTIF');
+
+        }
+
+    });
+</script>
 
 </body>
 

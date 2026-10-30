@@ -56,4 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kasir/struk/{id}', [KasirController::class, 'struk'])
         ->name('kasir.struk');
 
+    Route::get('/kasir/invoice/{id}', [KasirController::class, 'cetakInvoice'])
+        ->name('kasir.invoice');
+
 });

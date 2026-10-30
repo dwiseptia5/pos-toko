@@ -107,18 +107,27 @@
             gap: 8px;
         }
 
-        .actions button {
+        .actions button,
+        .btn-pdf {
             flex: 1;
             border: none;
             padding: 10px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 11px;
+            text-align: center;
         }
 
         .btn-print {
             background: #198754;
             color: white;
+        }
+
+        .btn-pdf {
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
         }
 
         .btn-new {
@@ -306,6 +315,7 @@
 
     </div>
 
+
     <div class="actions">
 
         <button
@@ -313,6 +323,12 @@
             onclick="window.print()">
             🖨 Cetak Struk
         </button>
+
+        <a
+            href="{{ route('kasir.invoice', $transaction->id) }}"
+            class="btn-pdf">
+            📄 Download PDF
+        </a>
 
         <button
             class="btn-new"
@@ -324,6 +340,7 @@
 
 </div>
 
+
 <script>
     window.addEventListener('load', function () {
         window.print();
@@ -331,5 +348,4 @@
 </script>
 
 </body>
-
 </html>
